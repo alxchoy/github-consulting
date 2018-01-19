@@ -1,4 +1,32 @@
 body {
-  background-color: pink;
-  p { color: blue; }
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  h1 {
+    text-align: center;
+  } 
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    margin: 20px 0px 40px 0px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid;
+  }
+  input {
+    width: 200px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    outline: 0px;
+    border: 1px solid;
+    font-size: 16px;
+  }
 }

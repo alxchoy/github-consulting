@@ -13,6 +13,10 @@ module.exports = {
         test: /\.js?$/,
         use: 'babel-loader'
       },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        use: 'file-loader'
+      },
       {test: /\.scss$/, use: ['style-loader','css-loader','sass-loader']}
     ]
   },
