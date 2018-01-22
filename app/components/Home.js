@@ -1,6 +1,7 @@
 import React from 'react';
 
 import UserProfile from './UserProfile';
+import UserDetail from './UserDetail';
 
 const Home = () => (
   <div className="container">
