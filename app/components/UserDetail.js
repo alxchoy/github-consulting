@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 import UserRepos from './UserRepos';
 
 class UserDetail extends React.Component {
@@ -8,13 +10,13 @@ class UserDetail extends React.Component {
       <div className="user-detail">
         <nav>
           <ul>
-            <li>Repositories</li>
-            <li>Followers</li>
+            <li><Link to="/repos">Repositories</Link></li>
+            <li><Link to="/followers">Followers</Link></li>
             <li>Following</li>
           </ul>
         </nav>
 
-        <UserRepos user={this.props.user}/>
+        {this.props.children}
       </div>
     )
   }
