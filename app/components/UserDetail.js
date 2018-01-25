@@ -6,6 +6,7 @@ import UserRepos from './UserRepos';
 
 class UserDetail extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <div className="user-detail">
         <nav>

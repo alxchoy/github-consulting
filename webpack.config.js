@@ -5,7 +5,8 @@ module.exports = {
   entry: './app/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -19,6 +20,9 @@ module.exports = {
       },
       {test: /\.scss$/, use: ['style-loader','css-loader','sass-loader']}
     ]
+  },
+  devServer: {
+    historyApiFallback: true // para que nos de acceso a las rutas mediante la barra de direcciones
   },
   plugins: [
     new HtmlWebpackPlugin({
