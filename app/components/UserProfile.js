@@ -1,8 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+import {Route, BrowserRouter, Switch} from 'react-router-dom';
+
 import img from '../img/avatar.png';
 import UserDetail from './UserDetail';
+import UserRepos from './UserRepos';
+import UserFollowers from './UserFollowers';
 
 // UserDefault Component
 const UserDefault = (props) => (
@@ -40,7 +44,7 @@ class UserProfile extends React.Component {
       searchUser: null,
       dataUser: ''
     };
-  
+
     this.handleChange = this.handleChange.bind(this);
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleClickReset = this.handleClickReset.bind(this);
@@ -77,9 +81,9 @@ class UserProfile extends React.Component {
     return (
       <div>
         {!searchUser && <UserDefault value={this.state.value} change={this.handleChange} clickSearch={this.handleClickSearch}/>}
-        {searchUser && 
-          <UserInformation 
-            avatar={dataUser.avatar_url} 
+        {searchUser &&
+          <UserInformation
+            avatar={dataUser.avatar_url}
             name={dataUser.name}
             userName={dataUser.login}
             followers={dataUser.followers}
@@ -90,7 +94,16 @@ class UserProfile extends React.Component {
           />
         }
         {searchUser && <UserDetail user={dataUser.login}/>}
-        
+
+        <BrowserRouter>
+          <div>
+            <Route component={UserDetail}/>
+            <Switch>
+              <Route exact path="/repos" component={UserRepos}/>
+              <Route path="/followers" component={UserFollowers}/>
+            </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     )
   }
