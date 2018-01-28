@@ -26,22 +26,24 @@ class UserRepos extends React.Component {
     const repositories = this.state.repos;
     return (
       <div className="user-repos">
-        {repositories.map((item) => (
-          <div className="card" key={item.id}>
-            <div className="card__header">
-              <h3>{item.name}</h3>
-              <span>{item.language}</span>
+        {repositories.length == 0 ? <p>LOADING...</p> : 
+          repositories.map((item) => (
+            <div className="card" key={item.id}>
+              <div className="card__header">
+                <h3>{item.name}</h3>
+                <span>{item.language}</span>
+              </div>
+              <div className="card__body">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elint quo at rerum reprehenderit.</p>
+              </div>
+              <div className="card__footer">
+                <a href={item.html_url} target="_blank"><img src={github} alt="github"/></a>
+                <img src={star} alt="star"/>
+                <span>{item.stargazers_count}</span>
+              </div>
             </div>
-            <div className="card__body">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elint quo at rerum reprehenderit.</p>
-            </div>
-            <div className="card__footer">
-              <a href={item.html_url} target="_blank"><img src={github} alt="github"/></a>
-              <img src={star} alt="star"/>
-              <span>{item.stargazers_count}</span>
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     )
   }

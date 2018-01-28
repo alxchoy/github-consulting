@@ -25,8 +25,7 @@ class Home extends React.Component {
         <img src={img} alt="user"/>
         <div>
           <input type="text" placeholder="github username" value={this.state.value} onChange={this.handleChange}/>
-          <Link to={"/user/" + this.state.value}>Prueba</Link>
-          <button type="submit" >Buscar</button>
+          {this.state.value != '' && <Link to={`/user/${this.state.value}/repos`} className="search">Search</Link>}
         </div>
       </div>
     )

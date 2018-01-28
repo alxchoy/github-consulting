@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Route, BrowserRouter, Switch} from 'react-router-dom';
+import {Route, BrowserRouter, Switch, Link} from 'react-router-dom';
 
 
 import UserDetail from './UserDetail';
@@ -13,7 +13,7 @@ import UserFollowers from './UserFollowers';
 const UserInformation = (props) => (
   <div className="user-information">
     <img src={props.avatar} alt={`Avatar of ${props.name}`}/>
-    <h2>@{props.userName}</h2>
+    <h2><a href={`https://github.com/${props.userName}`} target="_blank">@{props.userName}</a></h2>
     <ul>
       <li>{props.name}</li>
       <li>Followers: {props.followers}</li>
@@ -21,7 +21,7 @@ const UserInformation = (props) => (
       <li>Repos: {props.repos}</li>
       {props.blog && <li>Blog: <a href={props.blog} target="_blank">{props.blog}</a></li>}
     </ul>
-    <button>Reset</button>
+    <Link to="/" className="reset">Reset</Link>
   </div>
 )
 
@@ -53,26 +53,21 @@ class UserProfile extends React.Component {
     const searchUser = this.state.searchUser;
     return (
       <div>
-        <UserInformation
-          avatar={dataUser.avatar_url}
-          name={dataUser.name}
-          userName={dataUser.login}
-          followers={dataUser.followers}
-          following={dataUser.following}
-          repos={dataUser.public_repos}
-          blog={dataUser.blog}
-          onReset={this.handleClickReset} />
-        {searchUser && 
-          <BrowserRouter>
-            <div>
-              <Route component={UserDetail} user={dataUser.login}/>
-              <Switch>
-                <Route exact path="/repos" component={UserRepos} user={dataUser.login}/>
-                <Route path="/followers" component={UserFollowers}/>
-              </Switch>
-            </div>
-          </BrowserRouter>
-        }
+      {dataUser.lenth == 0 ? <p>LOADING...</p> :
+        <div>
+          <UserInformation
+            avatar={dataUser.avatar_url}
+            name={dataUser.name}
+            userName={dataUser.login}
+            followers={dataUser.followers}
+            following={dataUser.following}
+            repos={dataUser.public_repos}
+            blog={dataUser.blog}
+            onReset={this.handleClickReset} />
+
+          <Route path={`/user/:id/:detail`} component={UserDetail}/>
+          </div>
+      }
       </div>
     )
   }

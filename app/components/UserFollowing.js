@@ -1,29 +1,29 @@
 import React from 'react';
 import axios from 'axios';
 
-class UserFollowers extends React.Component {
+class UserFollowing extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state ={followers: []} 
+    this.state ={following: []} 
   }
 
   componentDidMount() {
-    axios.get(`https://api.github.com/users/${this.props.user}/followers`)
+    axios.get(`https://api.github.com/users/${this.props.user}/following`)
       .then(res => {
         if (res.status == 200) {
           console.log(res);
-          this.setState({followers: res.data})
+          this.setState({following: res.data})
         }
       })
   }
 
   render() {
-    const followers = this.state.followers;
+    const following = this.state.following;
     return (
-      <div className="user-followers">
-        {followers.length == 0 ? <p>LOADING...</p> : 
-          followers.map((item) => (
+      <div className="user-following">
+        {following.length == 0 ? <p>LOADING...</p> : 
+          following.map((item) => (
             <div className="follower" key={item.id}>
               <img src={item.avatar_url} alt={`Avatar de ${item.login}`}/>
               <span>@{item.login}</span>
@@ -35,4 +35,4 @@ class UserFollowers extends React.Component {
   }
 }
 
-export default UserFollowers;
+export default UserFollowing;

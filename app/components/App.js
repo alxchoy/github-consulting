@@ -14,7 +14,7 @@ class App extends React.Component {
         <div className="container">
           <h1>GitHub Consulting</h1>
           <Route exact path="/" component={Home}/>
-          <Route path="/user/:id" component={UserProfile}/>
+          <Route path="/user/:id/" component={UserProfile}/>
         </div>
       </Router>
     )

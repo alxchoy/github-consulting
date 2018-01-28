@@ -20,7 +20,11 @@ body {
     border-radius: 50%;
     border: 1px solid;
   }
-  button {
+  a { 
+    text-decoration: none; 
+    color: #000;
+  }
+  .search, .reset {
     padding: 10px;
     background: black;
     color: white;
@@ -65,7 +69,16 @@ body {
     ul {
       display: flex;
       justify-content: space-around;
-      li { list-style: none; }
+      li { 
+        list-style: none;
+        a {
+          text-decoration: none;
+          color: #000;
+          &.active {
+            color: #d0021b;
+          }
+        }
+      }
     }
   }
 }
@@ -97,5 +110,20 @@ body {
   &:after {
     content: "";
     flex: 0 1 400px;
+  }
+}
+
+.user-followers, .user-following {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  .follower {
+    width: 150px;
+    text-align: center;
+    margin: 15px;
+    img {
+      width: 100%;
+      border-radius: 50%;
+    }
   }
 }
