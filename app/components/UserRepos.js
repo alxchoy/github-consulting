@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import store from '../store';
+
 import star from '../img/star.svg';
 import github from '../img/github.svg';
 
@@ -10,14 +12,23 @@ class UserRepos extends React.Component {
     this.state = {
       repos: []
     }
+
+    store.subscribe(() => {
+      this.setState({
+        repos: store.getState().repos
+      })
+    })
   }
 
   componentDidMount() {
-    axios.get(`https://api.github.com/users/${this.props.user}/repos`)
+    const user = store.getState().user;
+    axios.get(`https://api.github.com/users/${user}/repos`)
       .then(res => {
         if (res.status == 200) {
-          console.log(res);
-          this.setState({repos: res.data})
+          store.dispatch({
+            type: 'ADD_USER_REPOS',
+            repos: res.data
+          })
         }
       })
   }

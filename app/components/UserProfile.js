@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {Route, BrowserRouter, Switch, Link} from 'react-router-dom';
-
+import store from '../store';
 
 import UserDetail from './UserDetail';
 import UserRepos from './UserRepos';
@@ -17,7 +17,7 @@ const UserInformation = (props) => (
     <ul>
       <li>{props.name}</li>
       <li>Followers: {props.followers}</li>
-      <li>following: {props.following}</li>
+      <li>Following: {props.following}</li>
       <li>Repos: {props.repos}</li>
       {props.blog && <li>Blog: <a href={props.blog} target="_blank">{props.blog}</a></li>}
     </ul>
@@ -30,9 +30,14 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchUser: false,
       dataUser: ''
     };
+
+    store.subscribe(() => {
+      this.setState({
+        dataUser: store.getState().data
+      })
+    })
   }
 
   componentDidMount() {
@@ -40,34 +45,33 @@ class UserProfile extends React.Component {
     axios.get(`https://api.github.com/users/${user}`)
       .then(res => {
         if (res.status == 200) {
-          this.setState({
-            searchUser: true,
-            dataUser: res.data
-          });
+          store.dispatch({
+            type: 'ADD_USER_DATA',
+            data: res.data
+          })
         }
       });
   }
 
   render() {
     const dataUser = this.state.dataUser;
-    const searchUser = this.state.searchUser;
     return (
       <div>
-      {dataUser.lenth == 0 ? <p>LOADING...</p> :
-        <div>
-          <UserInformation
-            avatar={dataUser.avatar_url}
-            name={dataUser.name}
-            userName={dataUser.login}
-            followers={dataUser.followers}
-            following={dataUser.following}
-            repos={dataUser.public_repos}
-            blog={dataUser.blog}
-            onReset={this.handleClickReset} />
+        {dataUser.length == 0 ? <p>LOADING...</p> :
+          <div>
+            <UserInformation
+              avatar={dataUser.avatar_url}
+              name={dataUser.name}
+              userName={dataUser.login}
+              followers={dataUser.followers}
+              following={dataUser.following}
+              repos={dataUser.public_repos}
+              blog={dataUser.blog}
+              onReset={this.handleClickReset} />
 
-          <Route path={`/user/:id/:detail`} component={UserDetail}/>
+            <Route path={`/user/:id/:detail`} component={UserDetail}/>
           </div>
-      }
+        }
       </div>
     )
   }

@@ -14,7 +14,6 @@ class UserDetail extends React.Component {
   }
 
   render() {
-    console.log(this.props.match.params.detail);
     const user = this.props.match.params.id;
     const detail = this.props.match.params.detail;
     return (
@@ -27,9 +26,9 @@ class UserDetail extends React.Component {
           </ul>
         </nav>
 
-        {detail == 'repos' && <UserRepos user={user}/>}
-        {detail == 'followers' && <UserFollowers user={user}/>}
-        {detail == 'following' && <UserFollowing user={user}/>}
+        {detail == 'repos' && <UserRepos />}
+        {detail == 'followers' && <UserFollowers />}
+        {detail == 'following' && <UserFollowing />}
       </div>
     )
   }

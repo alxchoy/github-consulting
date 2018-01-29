@@ -1,19 +1,30 @@
 import React from 'react';
 import axios from 'axios';
 
+import store from '../store';
+
 class UserFollowing extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state ={following: []} 
+    this.state ={following: []}
+
+    store.subscribe(() => {
+      this.setState({
+        following: store.getState().following
+      })
+    })
   }
 
   componentDidMount() {
-    axios.get(`https://api.github.com/users/${this.props.user}/following`)
+    const user = store.getState().user;
+    axios.get(`https://api.github.com/users/${user}/following`)
       .then(res => {
         if (res.status == 200) {
-          console.log(res);
-          this.setState({following: res.data})
+          store.dispatch({
+            type: 'ADD_USER_FOLLOWING',
+            following: res.data
+          })
         }
       })
   }
