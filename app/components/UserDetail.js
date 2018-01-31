@@ -8,12 +8,29 @@ import UserRepos from './UserRepos';
 import UserFollowers from './UserFollowers';
 import UserFollowing from './UserFollowing';
 
+import store from '../store';
+
 class UserDetail extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      repos: [],
+      followers: []
+    }
+  }
+
+  componentWillMount() {
+    store.subscribe(() => {
+      this.setState({
+        repos: store.getState().userRepos,
+        followers: store.getState().userFollowers
+      })
+    })
   }
 
   render() {
+    console.log(this.state.repos);
     const user = this.props.match.params.id;
     const detail = this.props.match.params.detail;
     return (
@@ -26,8 +43,8 @@ class UserDetail extends React.Component {
           </ul>
         </nav>
 
-        {detail == 'repos' && <UserRepos />}
-        {detail == 'followers' && <UserFollowers />}
+        {detail == 'repos' && <UserRepos data={this.state.repos}/>}
+        {detail == 'followers' && <UserFollowers data={this.state.followers}/>}
         {detail == 'following' && <UserFollowing />}
       </div>
     )

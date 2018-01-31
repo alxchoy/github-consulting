@@ -15,6 +15,9 @@ class App extends React.Component {
           <h1>GitHub Consulting</h1>
           <Route exact path="/" component={Home}/>
           <Route path="/user/:id/" component={UserProfile}/>
+          <Switch>
+            <Route path={`/user/:id/:detail`} component={UserDetail}/>
+          </Switch>
         </div>
       </Router>
     )

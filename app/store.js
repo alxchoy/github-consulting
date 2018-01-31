@@ -1,45 +1,21 @@
 import { createStore } from 'redux';
 
 const reducer = (state, action) => {
-  if (action.type == 'ADD_USER') {
+  if (action.type == 'ADD_USER_DATA') {
+    console.log(action);
     return {
-      user: action.user,
-      data: state.data,
-      repos: state.repos,
-      followers: state.followers,
-      following: state.following
+      userData: action.data[0].data,
+      userRepos: action.data[1].data,
+      userFollowers: action.data[2].data,
+      userFollowing: action.data[3].data
     }
-  } else if (action.type == 'ADD_USER_DATA') {
+  } else if (action.type == 'CHANGE_USER_DATA') {
+    console.log(action);
     return {
-      user: state.user,
-      data: action.data,
-      repos: state.repos,
-      followers: state.followers,
-      following: state.following
-    }
-  } else if (action.type == 'ADD_USER_REPOS') {
-    return {
-      user: state.user,
-      data: state.data,
-      repos: action.repos,
-      followers: state.followers,
-      following: state.following
-    }
-  } else if (action.type == 'ADD_USER_FOLLOWERS') {
-    return {
-      user: state.user,
-      data: state.data,
-      repos: state.repos,
-      followers: action.followers,
-      following: state.following
-    }
-  } else if (action.type == 'ADD_USER_FOLLOWING') {
-    return {
-      user: state.user,
-      data: state.data,
-      repos: state.repos,
-      followers: state.followers,
-      following: action.following
+      userData: action.data[0].data,
+      userRepos: action.data[1].data,
+      userFollowers: action.data[2].data,
+      userFollowing: action.data[3].data
     }
   }
 
@@ -47,11 +23,10 @@ const reducer = (state, action) => {
 }
 
 const store = createStore(reducer, {
-  user: null,
-  data: [],
-  repos: [],
-  followers: [],
-  following: []
+  userData: [],
+  userRepos: [],
+  userFollowers: [],
+  userFollowing: []
 });
 
 export default store;

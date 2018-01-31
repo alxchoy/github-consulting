@@ -2,35 +2,37 @@ import React from 'react';
 import axios from 'axios';
 
 import store from '../store';
+import { getUserData } from '../service';
+
+import {Link} from 'react-router-dom';
 
 class UserFollowers extends React.Component {
   constructor(props) {
     super(props);
 
     this.state ={followers: []}
-
-    store.subscribe(() => {
-      this.setState({
-        followers: store.getState().followers
-      })
-    })
+    this.changeData = this.changeData.bind(this);
   }
 
-  componentDidMount() {
-    const user = store.getState().user;
-    axios.get(`https://api.github.com/users/${user}/followers`)
-      .then(res => {
-        if (res.status == 200) {
-          store.dispatch({
-            type: 'ADD_USER_FOLLOWERS',
-            followers: res.data
-          })
-        }
+  // componentDidMount() {
+  //     store.subscribe(() => {
+  //       this.setState({
+  //         followers: store.getState().userFollowers
+  //       })
+  //     })
+  // }
+
+  changeData() {
+    getUserData('kevinrodbe').then(res => {
+      store.dispatch({
+        type: 'CHANGE_USER_DATA',
+        data: res
       })
+    });
   }
 
   render() {
-    const followers = this.state.followers;
+    const followers = this.props.data;
     return (
       <div className="user-followers">
         {followers.length == 0 ? <p>LOADING...</p> : 
@@ -38,6 +40,7 @@ class UserFollowers extends React.Component {
             <div className="follower" key={item.id}>
               <img src={item.avatar_url} alt={`Avatar de ${item.login}`}/>
               <span>@{item.login}</span>
+              <Link to={`/user/${this.state.user}/repos`} onClick={this.changeData}>@{item.login}</Link>
             </div>
           ))
         }

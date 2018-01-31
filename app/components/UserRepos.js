@@ -9,32 +9,21 @@ import github from '../img/github.svg';
 class UserRepos extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      repos: []
-    }
 
-    store.subscribe(() => {
-      this.setState({
-        repos: store.getState().repos
-      })
-    })
   }
 
-  componentDidMount() {
-    const user = store.getState().user;
-    axios.get(`https://api.github.com/users/${user}/repos`)
-      .then(res => {
-        if (res.status == 200) {
-          store.dispatch({
-            type: 'ADD_USER_REPOS',
-            repos: res.data
-          })
-        }
-      })
-  }
+  // componentDidMount() {
+  //   store.subscribe(() => {
+  //     console.log("subscribe")
+  //     this.setState({
+  //       user: store.getState().userRepos
+  //     })
+  //   })
+  // }
 
   render() {
-    const repositories = this.state.repos;
+    console.log(this.props.data);
+    const repositories = this.props.data;
     return (
       <div className="user-repos">
         {repositories.length == 0 ? <p>LOADING...</p> : 

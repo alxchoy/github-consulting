@@ -29,28 +29,18 @@ const UserInformation = (props) => (
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       dataUser: ''
     };
-
-    store.subscribe(() => {
-      this.setState({
-        dataUser: store.getState().data
-      })
-    })
   }
 
   componentDidMount() {
-    const user = this.props.match.params.id;
-    axios.get(`https://api.github.com/users/${user}`)
-      .then(res => {
-        if (res.status == 200) {
-          store.dispatch({
-            type: 'ADD_USER_DATA',
-            data: res.data
-          })
-        }
-      });
+    store.subscribe(() => {
+      this.setState({
+        dataUser: store.getState().userData
+      })
+    })
   }
 
   render() {
@@ -69,7 +59,6 @@ class UserProfile extends React.Component {
               blog={dataUser.blog}
               onReset={this.handleClickReset} />
 
-            <Route path={`/user/:id/:detail`} component={UserDetail}/>
           </div>
         }
       </div>
